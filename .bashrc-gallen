@@ -1,0 +1,6 @@
+EXPORT_PATH=~/bin:/opt/tools/bin:/opt/arm-2008q3/bin:/opt/freescale/usr/local/gcc-4.1.2-glibc-2.5-nptl-3/arm-none-linux-gnueabi/bin:/opt/marvell/arm-marvell-linux-gnueabi_4.2/bin:/opt/marvell/arm-marvell-linux-gnueabi/bin:/work-marvell/arm-marvell-linux-gnueabi/bin:/opt/freescale/usr/local/gcc-4.4.4-glibc-2.11.1-multilib-1.0/arm-fsl-linux-gnueabi/bin:/home/${USER}/android-sdk-linux_x86/tools:/home/${USER}/android-sdk-linux_x86/platform-tools:/opt/mipseltools-gcc412-glibc261/bin
+
+if [ "$(echo $PATH|grep "${EXPORT_PATH}")" = "" ];then
+	export PATH=$PATH:$EXPORT_PATH
+fi
+
