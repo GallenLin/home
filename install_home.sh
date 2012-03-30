@@ -1,8 +1,8 @@
 #!/bin/bash
 
 work_dir="$(pwd)"
-
-find -maxdepth 1|grep -v "^\.svn"|grep -v "^\.hg"|grep -v "^\.git"|grep -v "$(basename ${0})$"|grep -v "\.$"|grep -v "\.\.$"|
+#"
+find -maxdepth 1|grep -v "^\.svn"|grep -v "^\.hg"|grep -v "^\.git"|grep -v "\.$"|grep -v "\.\.$"|grep -v "$(basename ${0})"| 
 while read _path
 do
 	if [ -f "${HOME}/${_path}" ];then
