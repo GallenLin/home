@@ -2,11 +2,11 @@
 
 work_dir="$(pwd)"
 
-find -maxdepth 1 |grep -v ".svn" |grep -v ".hg"|grep -v ".git" | 
+find -maxdepth 1|grep -v "^\.svn"|grep -v "^\.hg"|grep -v "^\.git"|grep -v "$(basename ${0})$"|grep -v "\.$"|grep -v "\.\.$"|
 while read _path
 do
 	if [ -f "${HOME}/${_path}" ];then
-		dialog --title "${_path} in ${HOME} is existed" \
+		LANG=C dialog --ascii-lines --title "${_path} in ${HOME} is existed" \
 		--clear \
 		--ok-label "Overwrite" \
 		--no-label "Abort" \
@@ -17,7 +17,7 @@ do
   	0)
     	echo "Overwrite chosen."
 			rm -f "${HOME}/${_path}"
-			echo "ln -s "${work_dir}/${_path}" "${HOME}/""
+			ln -s "${work_dir}/${_path}" "${HOME}/"
 			;;
   	1)
     	echo "Abort chosen."
@@ -37,7 +37,7 @@ do
 	elif [ -d "${HOME}/${_path}" ];then
 		echo "skip folder \"${HOME}/${_path}\""
 	else
-		echo "ln -s "${work_dir}/${_path}" "${HOME}/""
+		ln -s "${work_dir}/${_path}" "${HOME}/"
 	fi
 	
 done
