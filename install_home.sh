@@ -18,7 +18,7 @@ install_bashrc_custom() {
 }
 
 install_files_to_home() {
-	find -maxdepth 1|grep -v "\.svn"|grep -v "\.hg"|grep -v "\.git"|grep -v "\.$"|grep -v "\.\.$"|grep -v "$(basename ${0})"| 
+	find -maxdepth 1|grep -v "\.svn"|grep -v "\.hg"|grep -v "\.git"|grep -v "\.$"|grep -v "\.\.$"|grep -v ".*~$"|grep -v ".*swp$"|grep -v "$(basename ${0})"| 
 	while read _path
 	do
 		if [ -f "${HOME}/${_path}" ];then
