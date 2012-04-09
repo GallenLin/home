@@ -30,6 +30,7 @@ config_android_udev_access() {
 	#####################################################
 	_signature="## android usb devices official ..." # 
 	if [ ! -f "${_udev_rule_file}" ] || [ -z "$(cat "${_udev_rule_file}"|grep "${_signature}")" ];then
+		echo "append ${_signature} into ${_udev_rule_file} ..."
 		config_append=1
 		echo "${_signature}[" >> "${_tmp_file}"
 
@@ -66,6 +67,26 @@ EOF
 	fi
 	##############################################################
 
+
+	#####################################################
+	_signature="## android usb devices for fsl ..." # 
+	if [ ! -f "${_udev_rule_file}" ] || [ -z "$(cat "${_udev_rule_file}"|grep "${_signature}")" ];then
+		echo "append ${_signature} into ${_udev_rule_file} ..."
+		config_append=1
+		echo "${_signature}[" >> "${_tmp_file}"
+
+		# content of udev config file ...
+cat >&2 <<- EOF >> "${_tmp_file}"
+# usbboot protocol on freescale mx50_rdp 
+SUBSYSTEM=="usb", ATTR{idVendor}=="15a2", ATTR{idProduct}=="0c02", MODE="0600", OWNER="${_username}"
+EOF
+
+		echo "${_signature}]" >> "${_tmp_file}"
+		echo "" >> "${_tmp_file}"
+	else
+		echo "${_signature} is existed !"
+	fi
+	##############################################################
 	
 	if [ 1=${config_append} ];then
 		sudo -s "cat "${_tmp_file}" >> "${_udev_rule_file}""
