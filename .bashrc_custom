@@ -29,4 +29,6 @@ if [ -z "$(echo $PATH|grep "${EXPORT_PATH}")" ];then
 	export PATH=$PATH:$EXPORT_PATH
 fi
 
+alias gvim="gvim -f"
+
 

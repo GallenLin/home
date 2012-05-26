@@ -58,9 +58,22 @@ install_files_to_home() {
 		fi
 		
 	done
+	
+
 
 	return 0
 }
+
+
+install_hgrc() {
+	if [ ! -f "${HOME}/.hgrc" ];then
+		echo "install .hgrc into your home ."
+		ln -s ${work_dir}/.hgrc "${HOME}/.hgrc"
+	fi
+	return 0
+}
+
+install_hgrc
 
 install_files_to_home
 [ $? != 0 ] && echo "install files to home fail !" && exit 1
