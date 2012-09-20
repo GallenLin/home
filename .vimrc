@@ -62,6 +62,10 @@ if filereadable("/usr/share/vim/vim72/vimrc_example.vim")
   source /usr/share/vim/vim72/vimrc_example.vim
 endif
 
+if filereadable("/usr/share/vim/vim73/vimrc_example.vim")
+  source /usr/share/vim/vim73/vimrc_example.vim
+endif
+
 " --- gallen add begin ---
 colors desert
 "set ts=2
