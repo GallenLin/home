@@ -8,6 +8,11 @@ work_dir="$(pwd)"
 install_bashrc_custom() {
 	addstr=". ~/.bashrc_custom"
 	
+	if [ ! -f "${HOME}/.bashrc" ] || [ "$(cat "${HOME}/.bashrc")" ];then
+		echo "${HOME}/.bashrc not found or empty !!!"
+		cp bashrc.ubuntu1204 "${HOME}/.bashrc"
+	fi
+
 	if [ -z "$(cat ~/.bashrc|grep "${addstr}")" ];then
 		echo "" >> ~/.bashrc
 		echo "${addstr}" >> ~/.bashrc
