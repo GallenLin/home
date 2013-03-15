@@ -2,7 +2,33 @@
 
 #. ../build/envsetup.sh
 
-setup_ccache() {
+myandroid_setup_env() {
+	if [ -z "$(type gettop)" ];then
+		if [ -f build/envsetup.sh ];then
+			. build/envsetup.sh
+		else
+			echo "Please source build/envsetup.sh from the top of your android source tree !"
+			return 1 
+		fi
+	fi
+	
+	if [ -z "${ANDROID_PRODUCT_OUT}" ];then
+		lunch
+	fi
+
+	if [ -z "${ANDROID_PRODUCT_OUT}" ];then
+		echo "please run lunch first !"
+		return 1
+	fi
+
+	export ARCH=arm
+	export SUBARCH=arm
+	export CROSS_COMPILE=${ARM_EABI_TOOLCHAIN}/arm-eabi-
+
+	return 0
+}
+
+myandroid_setup_ccache() {
 	_ccache_dir=$1
 	_ccache_max_size=$2 #eg, 10G ,500M .
 
@@ -13,9 +39,9 @@ setup_ccache() {
 
 
 	export USE_CCACHE=1
-	export CCACHE_DIR="$_ccache_dir"
+	export CCACHE_DIR="${_ccache_dir}"
 
-	${gettop}/prebuilt/linux-x86/ccache/ccache -M "$_ccache_max_size"
+	eval "$(gettop)/prebuilt/linux-x86/ccache/ccache -M "${_ccache_max_size}""
 
 	return 0
 }
@@ -24,7 +50,7 @@ setup_ccache() {
 #
 # push file into target .
 #
-push_to_target() {
+myandroid_push_to_target() {
 	output_path="$1"
 
 	_current_dir="$(pwd)"
@@ -79,12 +105,14 @@ kmake() {
 
 
 	export ARCH=arm
+	export SUBARCH=arm
 	#export CROSS_COMPILE="$(gettop)/prebuilt/linux-x86/toolchain/arm-eabi-4.4.3/bin/arm-eabi-"
-	export CROSS_COMPILE="arm-eabi-"
+	export CROSS_COMPILE=${ARM_EABI_TOOLCHAIN}/arm-eabi-
 	#export CROSS_COMPILE="$(echo ${ANDROID_EABI_TOOLCHAIN}|sed -e "s/-.\..\..\/bin$/-/"|sed -e "s/^.*\///g")"
-	make ${KTARGET} | tee make.log 
+	make ${KTARGET}
 
 	return 0
 }
 
+myandroid_setup_env
 
