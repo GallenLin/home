@@ -23,7 +23,9 @@ myandroid_setup_env() {
 
 	export ARCH=arm
 	export SUBARCH=arm
-	export CROSS_COMPILE=${ARM_EABI_TOOLCHAIN}/arm-eabi-
+
+	#export CROSS_COMPILE=${ARM_EABI_TOOLCHAIN}/arm-eabi-
+	export CROSS_COMPILE=${ANDROID_EABI_TOOLCHAIN}/arm-eabi-
 
 	return 0
 }
@@ -107,7 +109,8 @@ kmake() {
 	export ARCH=arm
 	export SUBARCH=arm
 	#export CROSS_COMPILE="$(gettop)/prebuilt/linux-x86/toolchain/arm-eabi-4.4.3/bin/arm-eabi-"
-	export CROSS_COMPILE=${ARM_EABI_TOOLCHAIN}/arm-eabi-
+	#export CROSS_COMPILE=${ARM_EABI_TOOLCHAIN}/arm-eabi-
+	export CROSS_COMPILE=${ANDROID_EABI_TOOLCHAIN}/arm-eabi-
 	#export CROSS_COMPILE="$(echo ${ANDROID_EABI_TOOLCHAIN}|sed -e "s/-.\..\..\/bin$/-/"|sed -e "s/^.*\///g")"
 	make ${KTARGET}
 
