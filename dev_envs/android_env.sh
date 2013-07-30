@@ -24,8 +24,10 @@ myandroid_setup_env() {
 	export ARCH=arm
 	export SUBARCH=arm
 
-	#export CROSS_COMPILE=${ARM_EABI_TOOLCHAIN}/arm-eabi-
 	export CROSS_COMPILE=${ANDROID_EABI_TOOLCHAIN}/arm-eabi-
+	if [ ! -f "${CROSS_COMPILE}gcc" ];then
+		export CROSS_COMPILE=${ARM_EABI_TOOLCHAIN}/arm-eabi-
+	fi
 
 	return 0
 }
