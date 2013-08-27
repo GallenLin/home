@@ -42,7 +42,7 @@ esac
 # should be on the output of commands, not on the prompt
 
 # Gallen add :
-if [ ${COLORTERM} = "mate-terminal" ];then
+if [ ${COLORTERM} = "mate-terminal" ] || [ ${COLORTERM} = "gnome-terminal" ];then
 	force_color_prompt=yes
 fi
 
