@@ -43,12 +43,22 @@ myandroid_setup_ccache() {
 
 
 	export USE_CCACHE=1
+
+	if [ ! -d "${_ccache_dir}" ];then
+		mkdir -p "${_ccache_dir}"
+	fi
 	export CCACHE_DIR="${_ccache_dir}"
 
-	eval "$(gettop)/prebuilt/linux-x86/ccache/ccache -M "${_ccache_max_size}""
+	
+	if [ -f "${ANDROID_BUILD_TOP}/prebuilts/misc/linux-x86/ccache" ];then
+		eval "${ANDROID_BUILD_TOP}/prebuilts/misc/linux-x86/ccache/ccache -M "${_ccache_max_size}""
+	else
+		eval "${ANDROID_BUILD_TOP}/prebuilt/linux-x86/ccache/ccache -M "${_ccache_max_size}""
+	fi
 
 	return 0
 }
+
 
 
 #
@@ -120,4 +130,6 @@ kmake() {
 }
 
 myandroid_setup_env
+myandroid_setup_ccache ${HOME}/ccache 20G
+
 
