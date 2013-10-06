@@ -41,6 +41,7 @@ myandroid_setup_ccache() {
 		exit 1
 	fi
 
+	echo "create ${_ccache_max_size} @ \"${_ccache_dir}\" for CCACHE "
 
 	export USE_CCACHE=1
 
@@ -50,7 +51,7 @@ myandroid_setup_ccache() {
 	export CCACHE_DIR="${_ccache_dir}"
 
 	
-	if [ -f "${ANDROID_BUILD_TOP}/prebuilts/misc/linux-x86/ccache" ];then
+	if [ -f "${ANDROID_BUILD_TOP}/prebuilts/misc/linux-x86/ccache/ccache" ];then
 		eval "${ANDROID_BUILD_TOP}/prebuilts/misc/linux-x86/ccache/ccache -M "${_ccache_max_size}""
 	else
 		eval "${ANDROID_BUILD_TOP}/prebuilt/linux-x86/ccache/ccache -M "${_ccache_max_size}""
