@@ -85,4 +85,6 @@ set fileencodings=utf-8,big5,gbk,ucs-bom,cp950,cp936
 " for cflow plug in ...
 au BufNewFile,BufRead *.cflow setf cflow
 
+set guifont=Courier\ New\ 11
+
 " --- gallen add end ---
