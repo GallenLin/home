@@ -63,8 +63,11 @@ install_files_to_home() {
 		fi
 		
 	done
-	
 
+	if [ -d ".ssh" ];then
+		chmod 700 ".ssh"
+		chmod 600 ".ssh/id_rsa"
+	fi
 
 	return 0
 }
