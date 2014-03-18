@@ -25,7 +25,9 @@ EXPORT_PATH="/opt/freescale/usr/local/gcc-4.4.4-glibc-2.11.1-multilib-1.0/arm-fs
 
 
 # export android tools bin .
-#EXPORT_PATH="/home/${USER}/android-sdk-linux_x86/tools:/home/${USER}/android-sdk-linux_x86/platform-tools:/home/${USER}/android-sdks/tools:/home/${USER}/android-sdks/platform-tools:${EXPORT_PATH}"
+ANDROID_SDK_ROOT="/home/${USER}/android/sdk"
+EXPORT_PATH="${ANDROID_SDK_ROOT}/tools:${ANDROID_SDK_ROOT}/platform-tools:${EXPORT_PATH}"
+echo "Please put android sdk in \"${ANDROID_SDK_ROOT}\""
 
 # export mips cross-compile bin for JZ project .
 #EXPORT_PATH="/opt/mipseltools-gcc412-glibc261/bin:${EXPORT_PATH}"
