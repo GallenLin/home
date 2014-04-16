@@ -130,6 +130,9 @@ kmake() {
 	return 0
 }
 
+echo "you can make your out/ into different path by following command : "
+echo "  make OUT_DIR=xxxx"
+
 myandroid_setup_env
 myandroid_setup_ccache ${HOME}/ccache 20G
 
