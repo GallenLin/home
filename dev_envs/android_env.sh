@@ -3,14 +3,20 @@
 #. ../build/envsetup.sh
 change_droid_out_dir() {
 	_NewOutPath="$1"
-	if [ "${_NewOutPath}" ];then
-		export OUT_DIR="${_NewOutPath}"
-	else
-		WORK_DIR="$(pwd)"
-		droid_top_basename="$(basename ${WORK_DIR})"
-		NEW_OUT_DIR="$(echo "${WORK_DIR}"|sed -e "s/\/${droid_top_basename}$/\/${droid_top_basename}_out/")"
-		export OUT_DIR="${NEW_OUT_DIR}"
+
+	WORK_DIR="$(pwd)"
+	droid_top_basename="$(basename ${WORK_DIR})"
+	if [ -z "${_NewOutPath}" ];then
+		_NewOutPath="$(echo "${WORK_DIR}"|sed -e "s/\/${droid_top_basename}$/\/${droid_top_basename}_out/")"
 	fi
+
+	if [ -d "out" ];then
+		echo "\"out\" existing ! you can remove it that we will use \"${_NewOutPath}\" instead of \"out\" ."
+		return 0
+	fi
+
+	export OUT_DIR="${_NewOutPath}"
+	return 0
 }
 
 myandroid_setup_env() {
