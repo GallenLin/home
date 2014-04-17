@@ -1,8 +1,20 @@
 #!/bin/bash
 
 #. ../build/envsetup.sh
+change_droid_out_dir() {
+	_NewOutPath="$1"
+	if [ "${_NewOutPath}" ];then
+		export OUT_DIR="${_NewOutPath}"
+	else
+		WORK_DIR="$(pwd)"
+		droid_top_basename="$(basename ${WORK_DIR})"
+		NEW_OUT_DIR="$(echo "${WORK_DIR}"|sed -e "s/\/${droid_top_basename}$/\/${droid_top_basename}_out/")"
+		export OUT_DIR="${NEW_OUT_DIR}"
+	fi
+}
 
 myandroid_setup_env() {
+
 	if [ -z "$(type gettop)" ];then
 		if [ -f build/envsetup.sh ];then
 			. build/envsetup.sh
@@ -21,8 +33,10 @@ myandroid_setup_env() {
 		return 1
 	fi
 
+
 	export ARCH=arm
 	export SUBARCH=arm
+
 
 	export CROSS_COMPILE=${ANDROID_EABI_TOOLCHAIN}/arm-eabi-
 	if [ ! -f "${CROSS_COMPILE}gcc" ];then
@@ -133,7 +147,13 @@ kmake() {
 echo "you can make your out/ into different path by following command : "
 echo "  make OUT_DIR=xxxx"
 
+# setup droid "out" folder different from android's defualt value .
+change_droid_out_dir
+
+#  
 myandroid_setup_env
+
+# setup ccache to 20GB .
 myandroid_setup_ccache ${HOME}/ccache 20G
 
 
