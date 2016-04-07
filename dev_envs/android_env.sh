@@ -44,9 +44,14 @@ myandroid_setup_env() {
 	export SUBARCH=arm
 
 
-	export CROSS_COMPILE=${ANDROID_EABI_TOOLCHAIN}/arm-eabi-
-	if [ ! -f "${CROSS_COMPILE}gcc" ];then
-		export CROSS_COMPILE=${ARM_EABI_TOOLCHAIN}/arm-eabi-
+	DROID_VERSION="$(printconfig|grep PLATFORM_VERSION=|sed -e "s/PLATFORM_VERSION=//")"
+	if [ "${DROID_VERSION}" = "5.1.1" ];then
+		export CROSS_COMPILE=${ANDROID_BUILD_TOP}/prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin/arm-eabi-
+	else
+		export CROSS_COMPILE=${ANDROID_EABI_TOOLCHAIN}/arm-eabi-
+		if [ ! -f "${CROSS_COMPILE}gcc" ];then
+			export CROSS_COMPILE=${ARM_EABI_TOOLCHAIN}/arm-eabi-
+		fi
 	fi
 
 	return 0
