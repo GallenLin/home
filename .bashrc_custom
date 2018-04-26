@@ -22,6 +22,8 @@ EXPORT_PATH="/opt/freescale/usr/local/gcc-4.6.2-glibc-2.13-linaro-multilib-2011.
 # export freescale arm mx50 cross-compiles bin .
 EXPORT_PATH="/opt/freescale/usr/local/gcc-4.4.4-glibc-2.11.1-multilib-1.0/arm-fsl-linux-gnueabi/bin:${EXPORT_PATH}"
 
+# export openrisc cross-compiles & or1ksim bin .
+EXPORT_PATH="${EXPORT_PATH}:/opt/or1k-toolchain/bin:/opt/or1ksim/bin"
 
 
 # export android tools bin .

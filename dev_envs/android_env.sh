@@ -1,6 +1,14 @@
 #!/bin/bash
 
 #. ../build/envsetup.sh
+
+usage() {
+	echo "$0 <VENDOR> <SOC>"
+	echo "  <VENDOR> : Rockchip|NXP|Freescale"
+	echo "  <SOC> : rk3368h|mx50|mx6sl|mx6sll|mx6ull|mx7d"
+	return 0
+}
+
 change_droid_out_dir() {
 	_NewOutPath="$1"
 
@@ -20,15 +28,17 @@ change_droid_out_dir() {
 }
 
 myandroid_setup_env() {
+	local vendor="$1"
+	local soc="$2"
 
-	if [ -z "$(type gettop)" ];then
+	#if [ -z "$(type gettop)" ];then
 		if [ -f build/envsetup.sh ];then
 			. build/envsetup.sh
 		else
 			echo "Please source build/envsetup.sh from the top of your android source tree !"
 			return 1 
 		fi
-	fi
+	#fi
 	
 	if [ -z "${ANDROID_PRODUCT_OUT}" ];then
 		lunch
@@ -40,13 +50,29 @@ myandroid_setup_env() {
 	fi
 
 
-	export ARCH=arm
-	export SUBARCH=arm
+	if [ "${vendor}" = "Rockchip" ];then
+		if [ "${soc}" = "rk3368h" ];then
+			# for boot make options :
+			export ARCHV=aarch64
+			# for kernel options :
+			export ARCH=arm64
+		fi
+	else
+		export ARCH=arm
+		export SUBARCH=arm
+	fi
 
 
 	DROID_VERSION="$(printconfig|grep PLATFORM_VERSION=|sed -e "s/PLATFORM_VERSION=//")"
+	TARGET_ARCH="$(printconfig|grep TARGET_ARCH=|sed -e "s/TARGET_ARCH=//")"
 	if [ "${DROID_VERSION}" = "5.1.1" ];then
 		export CROSS_COMPILE=${ANDROID_BUILD_TOP}/prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin/arm-eabi-
+	elif [ "$(echo "${DROID_VERSION}" |grep "^8\.")" ];then
+		if [ "${TARGET_ARCH}" = "arm64" ];then
+			export CROSS_COMPILE=${ANDROID_TOOLCHAIN}/aarch64-linux-androidkernel-
+		else
+			export CROSS_COMPILE=${ANDROID_TOOLCHAIN_2ND_ARCH}/arm-linux-androidkernel-
+		fi
 	else
 		export CROSS_COMPILE=${ANDROID_EABI_TOOLCHAIN}/arm-eabi-
 		if [ ! -f "${CROSS_COMPILE}gcc" ];then
@@ -63,7 +89,7 @@ myandroid_setup_ccache() {
 
 	if [ -z "$(type gettop)" ];then
 		echo "Please source build/envsetup.sh from the top of your android source tree !"
-		exit 1
+		return 1
 	fi
 
 	echo "create ${_ccache_max_size} @ \"${_ccache_dir}\" for CCACHE "
@@ -120,7 +146,7 @@ kmake() {
 
 	if [ -z "$(type gettop)" ];then
 		echo "Please source build/envsetup.sh from the top of your android source tree !"
-		exit 1
+		return 1
 	fi
 
 	#make imx6_android_defconfig
@@ -136,7 +162,7 @@ kmake() {
 
 	if [ -z "${ANDROID_EABI_TOOLCHAIN}" ];then
 		echo "please run lunch \"${KPLATFORM}\" first !"
-		exit 1
+		return 1
 	fi
 
 	if [ -z "${KTARGET}" ];then
@@ -155,6 +181,22 @@ kmake() {
 	return 0
 }
 
+VENDOR="$0"
+SOC="$1"
+
+
+if [ -z "${VENDOR}" ];then
+	echo "<VENDOR> cannot empty"
+	usage
+	return 1
+fi
+
+if [ -z "${SOC}" ];then
+	echo "<SOC> cannot empty"
+	usage 
+	return 1
+fi
+
 echo "you can make your out/ into different path by following command : "
 echo "  make OUT_DIR=xxxx"
 
@@ -167,4 +209,5 @@ myandroid_setup_env
 # setup ccache to 20GB .
 myandroid_setup_ccache ${HOME}/ccache 20G
 
+return 0 
 
