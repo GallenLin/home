@@ -49,6 +49,7 @@ myandroid_setup_env() {
 		return 1
 	fi
 
+	echo "vendor=${vendor},soc=${soc}"
 
 	if [ "${vendor}" = "Rockchip" ];then
 		if [ "${soc}" = "rk3368h" ];then
@@ -56,6 +57,7 @@ myandroid_setup_env() {
 			export ARCHV=aarch64
 			# for kernel options :
 			export ARCH=arm64
+			echo "ARCH=$ARCH"
 		fi
 	else
 		export ARCH=arm
@@ -181,8 +183,8 @@ kmake() {
 	return 0
 }
 
-VENDOR="$0"
-SOC="$1"
+VENDOR="$1"
+SOC="$2"
 
 
 if [ -z "${VENDOR}" ];then
@@ -204,7 +206,7 @@ echo "  make OUT_DIR=xxxx"
 change_droid_out_dir
 
 #  
-myandroid_setup_env
+myandroid_setup_env "${VENDOR}" "${SOC}"
 
 # setup ccache to 20GB .
 myandroid_setup_ccache ${HOME}/ccache 20G
