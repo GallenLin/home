@@ -73,7 +73,11 @@ myandroid_setup_env() {
 		if [ "${TARGET_ARCH}" = "arm64" ];then
 			export CROSS_COMPILE=${ANDROID_TOOLCHAIN}/aarch64-linux-androidkernel-
 		else
-			export CROSS_COMPILE=${ANDROID_TOOLCHAIN_2ND_ARCH}/arm-linux-androidkernel-
+			if [ "${ANDROID_TOOLCHAIN_2ND_ARCH}" ];then
+				export CROSS_COMPILE=${ANDROID_TOOLCHAIN_2ND_ARCH}/arm-linux-androidkernel-
+			else 
+				export CROSS_COMPILE=${ANDROID_TOOLCHAIN}/arm-linux-androidkernel-
+			fi
 		fi
 	else
 		export CROSS_COMPILE=${ANDROID_EABI_TOOLCHAIN}/arm-eabi-
@@ -144,42 +148,7 @@ myandroid_push_to_target() {
 #
 kmake() {
 	KTARGET="$1"
-	KPLATFORM="$2"
-
-	if [ -z "$(type gettop)" ];then
-		echo "Please source build/envsetup.sh from the top of your android source tree !"
-		return 1
-	fi
-
-	#make imx6_android_defconfig
-	#make mx50_rd3_android_config
-
-
-	#lunch imx6q_arm2-eng
-	#lunch imx50_rdp-eng
-
-	if [ "${KPLATFORM}" ];then
-		lunch "${KPLATFORM}"
-	fi
-
-	if [ -z "${ANDROID_EABI_TOOLCHAIN}" ];then
-		echo "please run lunch \"${KPLATFORM}\" first !"
-		return 1
-	fi
-
-	if [ -z "${KTARGET}" ];then
-		KTARGET="uImage"
-	fi
-
-
-	export ARCH=arm
-	export SUBARCH=arm
-	#export CROSS_COMPILE="$(gettop)/prebuilt/linux-x86/toolchain/arm-eabi-4.4.3/bin/arm-eabi-"
-	#export CROSS_COMPILE=${ARM_EABI_TOOLCHAIN}/arm-eabi-
-	export CROSS_COMPILE=${ANDROID_EABI_TOOLCHAIN}/arm-eabi-
-	#export CROSS_COMPILE="$(echo ${ANDROID_EABI_TOOLCHAIN}|sed -e "s/-.\..\..\/bin$/-/"|sed -e "s/^.*\///g")"
 	make ${KTARGET}
-
 	return 0
 }
 
@@ -204,6 +173,8 @@ echo "  make OUT_DIR=xxxx"
 
 # setup droid "out" folder different from android's defualt value .
 change_droid_out_dir
+
+echo "current OUT_DIR=\"${OUT_DIR}\""
 
 #  
 myandroid_setup_env "${VENDOR}" "${SOC}"
