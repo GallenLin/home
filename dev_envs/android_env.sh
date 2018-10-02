@@ -5,7 +5,7 @@
 usage() {
 	echo "$0 <VENDOR> <SOC>"
 	echo "  <VENDOR> : Rockchip|NXP|Freescale"
-	echo "  <SOC> : rk3368h|mx50|mx6sl|mx6sll|mx6ull|mx7d"
+	echo "  <SOC> : rk3368h|mx50|mx6sl|mx6dl|mx6sll|mx6ull|mx7d"
 	return 0
 }
 
@@ -79,6 +79,17 @@ myandroid_setup_env() {
 				export CROSS_COMPILE=${ANDROID_TOOLCHAIN}/arm-linux-androidkernel-
 			fi
 		fi
+
+		if [ "${soc}" = "mx6dl" ];then
+			export LOADADDR=0x10008000
+		elif [ "${soc}" = "mx6sl" ] || [ "${soc}" = "mx7d" ];then
+			export LOADADDR=0x80008000
+		fi
+
+		if [ "${vendor}" = "NXP" ] || [ "${vendor}" = "Freescale" ];then
+			export KCFLAGS=-mno-android
+		fi
+
 	else
 		export CROSS_COMPILE=${ANDROID_EABI_TOOLCHAIN}/arm-eabi-
 		if [ ! -f "${CROSS_COMPILE}gcc" ];then
