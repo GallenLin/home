@@ -191,7 +191,7 @@ echo "current OUT_DIR=\"${OUT_DIR}\""
 myandroid_setup_env "${VENDOR}" "${SOC}"
 
 # setup ccache to 20GB .
-myandroid_setup_ccache ${HOME}/ccache 20G
+#myandroid_setup_ccache ${HOME}/ccache 20G
 
 return 0 
 
