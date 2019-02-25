@@ -4,8 +4,8 @@
 
 usage() {
 	echo "$0 <VENDOR> <SOC>"
-	echo "  <VENDOR> : Rockchip|NXP|Freescale"
-	echo "  <SOC> : rk3368h|mx50|mx6sl|mx6dl|mx6sll|mx6ull|mx7d"
+	echo "  <VENDOR> : Rockchip|NXP|Freescale|Allwinner"
+	echo "  <SOC> : rk3368h|mx50|mx6sl|mx6dl|mx6sll|mx6ull|mx7d|b300"
 	return 0
 }
 
