@@ -5,7 +5,7 @@
 usage() {
 	echo "$0 <VENDOR> <SOC>"
 	echo "  <VENDOR> : Rockchip|NXP|Freescale"
-	echo "  <SOC> : rk3368h|mx50|mx6sl|mx6dl|mx6sll|mx6ull|mx7d"
+	echo "  <SOC> : rk3288|rk3368h|mx50|mx6sl|mx6dl|mx6sll|mx6ull|mx7d"
 	return 0
 }
 
@@ -58,6 +58,9 @@ myandroid_setup_env() {
 			# for kernel options :
 			export ARCH=arm64
 			echo "ARCH=$ARCH"
+		elif [ "${soc}" = "rk3288" ];then
+			export ARCH=arm
+			export SUBARCH=arm
 		fi
 	else
 		export ARCH=arm
@@ -67,7 +70,11 @@ myandroid_setup_env() {
 
 	DROID_VERSION="$(printconfig|grep PLATFORM_VERSION=|sed -e "s/PLATFORM_VERSION=//")"
 	TARGET_ARCH="$(printconfig|grep TARGET_ARCH=|sed -e "s/TARGET_ARCH=//")"
-	if [ "${DROID_VERSION}" = "5.1.1" ];then
+
+	
+	if [ "${soc}" = "rk3288" ] && [ "${DROID_VERSION}" = "6.0.1" ] ;then
+		export CROSS_COMPILE=${ANDROID_TOOLCHAIN}/arm-linux-androideabi-
+	elif [ "${DROID_VERSION}" = "5.1.1" ];then
 		export CROSS_COMPILE=${ANDROID_BUILD_TOP}/prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin/arm-eabi-
 	elif [ "$(echo "${DROID_VERSION}" |grep "^8\.")" ];then
 		if [ "${TARGET_ARCH}" = "arm64" ];then
@@ -91,7 +98,7 @@ myandroid_setup_env() {
 		fi
 
 	else
-		export CROSS_COMPILE=${ANDROID_EABI_TOOLCHAIN}/arm-eabi-
+		export CROSS_COMPILE=${ANDROID_TOOLCHAIN}/arm-linux-androideabi-
 		if [ ! -f "${CROSS_COMPILE}gcc" ];then
 			export CROSS_COMPILE=${ARM_EABI_TOOLCHAIN}/arm-eabi-
 		fi
