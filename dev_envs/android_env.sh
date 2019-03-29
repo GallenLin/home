@@ -73,7 +73,8 @@ myandroid_setup_env() {
 
 	
 	if [ "${soc}" = "rk3288" ] && [ "${DROID_VERSION}" = "6.0.1" ] ;then
-		export CROSS_COMPILE=${ANDROID_TOOLCHAIN}/arm-linux-androideabi-
+		#echo "rockchip sdk will select correct toolchain automatically ."
+		export CROSS_COMPILE=${ANDROID_TOOLCHAIN_2ND_ARCH}/arm/arm-eabi-4.8/bin/arm-eabi-
 	elif [ "${DROID_VERSION}" = "5.1.1" ];then
 		export CROSS_COMPILE=${ANDROID_BUILD_TOP}/prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin/arm-eabi-
 	elif [ "$(echo "${DROID_VERSION}" |grep "^8\.")" ];then
