@@ -4,8 +4,8 @@
 
 usage() {
 	echo "$0 <VENDOR> <SOC>"
-	echo "  <VENDOR> : Rockchip|NXP|Freescale"
-	echo "  <SOC> : rk3288|rk3368h|mx50|mx6sl|mx6dl|mx6sll|mx6ull|mx7d"
+	echo "  <VENDOR> : Rockchip|NXP|Freescale|Allwinner"
+	echo "  <SOC> : rk3288|rk3368h|mx50|mx6sl|mx6dl|mx6sll|mx6ull|mx7d|b300"
 	return 0
 }
 
@@ -70,7 +70,6 @@ myandroid_setup_env() {
 
 	DROID_VERSION="$(printconfig|grep PLATFORM_VERSION=|sed -e "s/PLATFORM_VERSION=//")"
 	TARGET_ARCH="$(printconfig|grep TARGET_ARCH=|sed -e "s/TARGET_ARCH=//")"
-
 	
 	if [ "${soc}" = "rk3288" ] && [ "${DROID_VERSION}" = "6.0.1" ] ;then
 		#echo "rockchip sdk will select correct toolchain automatically ."
@@ -99,7 +98,7 @@ myandroid_setup_env() {
 		fi
 
 	else
-		export CROSS_COMPILE=${ANDROID_TOOLCHAIN}/arm-linux-androideabi-
+		export CROSS_COMPILE=${ANDROID_EABI_TOOLCHAIN}/arm-eabi-
 		if [ ! -f "${CROSS_COMPILE}gcc" ];then
 			export CROSS_COMPILE=${ARM_EABI_TOOLCHAIN}/arm-eabi-
 		fi
