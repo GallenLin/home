@@ -64,9 +64,20 @@ install_files_to_home() {
 		
 	done
 
-	if [ -d ".ssh" ];then
+	copy_ssh=0
+	if [ -d ".ssh" ] && [ ! -L ".ssh" ];then
+		default_answer="no"
+		read -p "\".ssh\" exist ! overwrite ? ${default_answer} [yes|no] : " answer
+		if [ "${answer}" = "yes" ];then
+			copy_ssh=1
+		fi
+	fi
+
+	if [ "${copy_ssh}" = 1 ];then
+		cp -a ".ssh" "${HOME}/"
 		chmod 700 ".ssh"
 		chmod 600 ".ssh/id_rsa"
+		chmod 644 ".ssh/id_rsa.pub"
 	fi
 
 	return 0
