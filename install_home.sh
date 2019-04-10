@@ -67,7 +67,7 @@ install_files_to_home() {
 	if [ -L "${HOME}/.ssh" ];then
 		echo "WARNING : ${HOME}/.ssh is a symbolic link"
 	elif [ -d "${HOME}/.ssh" ];then
-		cp .ssh/* "${HOME}/.ssh/"
+		cp -a .ssh/* ${HOME}/.ssh/
 	else
 		mkdir "${HOME}/.ssh"
 	fi
