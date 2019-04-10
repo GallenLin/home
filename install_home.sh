@@ -23,7 +23,7 @@ install_bashrc_custom() {
 }
 
 install_files_to_home() {
-	find -maxdepth 1|grep -v "\.svn"|grep -v "\.hg"|grep -v "\.git"|grep -v "\.$"|grep -v "\.\.$"|grep -v ".*~$"|grep -v ".*swp$"|grep -v "$(basename ${0})"| 
+	find -maxdepth 1|grep -v "\.ssh"|grep -v "\.svn"|grep -v "\.hg"|grep -v "\.git"|grep -v "\.$"|grep -v "\.\.$"|grep -v ".*~$"|grep -v ".*swp$"|grep -v "$(basename ${0})"| 
 	while read _path
 	do
 		if [ -f "${HOME}/${_path}" ];then
@@ -64,11 +64,17 @@ install_files_to_home() {
 		
 	done
 
-	if [ -d ".ssh" ] ;then
-		chmod 700 ".ssh"
-		chmod 600 ".ssh/id_rsa"
-		chmod 644 ".ssh/id_rsa.pub"
+	if [ -L "${HOME}/.ssh" ];then
+		echo "WARNING : ${HOME}/.ssh is a symbolic link"
+	elif [ -d "${HOME}/.ssh" ];then
+		cp .ssh/* "${HOME}/.ssh/"
+	else
+		mkdir "${HOME}/.ssh"
 	fi
+
+	chmod 700 "${HOME}/.ssh"
+	chmod 600 "${HOME}/.ssh/id_rsa"
+	chmod 644 "${HOME}/.ssh/id_rsa.pub"
 
 	return 0
 }
