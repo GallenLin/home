@@ -64,17 +64,33 @@ install_files_to_home() {
 		
 	done
 
-	if [ -L "${HOME}/.ssh" ];then
-		echo "WARNING : ${HOME}/.ssh is a symbolic link"
-	elif [ -d "${HOME}/.ssh" ];then
-		cp -a .ssh/* ${HOME}/.ssh/
-	else
-		mkdir "${HOME}/.ssh"
-	fi
 
-	chmod 700 "${HOME}/.ssh"
-	chmod 600 "${HOME}/.ssh/id_rsa"
-	chmod 644 "${HOME}/.ssh/id_rsa.pub"
+	# setup all file and directory permission naming .ssh* ...
+	find |grep .ssh.* | 
+	while read ssh_fdesc 
+	do 
+		if [ -L "${HOME}/${ssh_fdesc}" ];then
+			# do nothing if .ssh* exist as a symbolic link . 
+			echo "WARNING : ${HOME}/${ssh_fdesc} is a symbolic link"
+		elif [ -d "${HOME}/${ssh_fdesc}" ];then
+			cp -a .${ssh_fdesc}/* ${HOME}/${ssh_fdesc}/
+		else
+			# if .ssh* not exist we can choose create symbolic or copy file into a new one . 
+			method="new" # new | symbolic 
+			if [ "${method}" = "new" ];then
+				mkdir "${HOME}/${ssh_fdesc}"
+				cp -a .${ssh_fdesc}/* ${HOME}/${ssh_fdesc}/
+			else
+				ln -s "${work_dir}/${ssh_fdesc}" "${HOME}/"
+			fi
+		fi
+
+		if [ -d "${HOME}/${ssh_fdesc}" ];then
+			chmod 700 "${HOME}/${ssh_fdesc}"
+			chmod 600 "${HOME}/${ssh_fdesc}/id_rsa"
+			chmod 644 "${HOME}/${ssh_fdesc}/id_rsa.pub"
+		fi
+	done
 
 	return 0
 }
