@@ -76,7 +76,7 @@ install_files_to_home() {
 			cp -a .${ssh_fdesc}/* ${HOME}/${ssh_fdesc}/
 		else
 			# if .ssh* not exist we can choose create symbolic or copy file into a new one . 
-			method="new" # new | symbolic 
+			method="symbolic" # new | symbolic 
 			if [ "${method}" = "new" ];then
 				mkdir "${HOME}/${ssh_fdesc}"
 				cp -a .${ssh_fdesc}/* ${HOME}/${ssh_fdesc}/
