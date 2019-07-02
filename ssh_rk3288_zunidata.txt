@@ -1,0 +1,7 @@
+
+1. id_rsa  Copy 到 ~/.ssh_xxxxx/ 目錄下
+2. 修改 id_rsa 許可權為 0600
+3. $ ssh-agent bash
+4. $ ssh-add ~/.ssh_xxxxx/id_rsa
+5. 輸入 id_rsa的密碼 ：zunidata
+
