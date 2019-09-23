@@ -1,7 +1,7 @@
 EXPORT_PATH=
 
 # export $HOME/bin
-EXPORT_PATH="${HOME}/home/bin:${HOME}/bin:${EXPORT_PATH}"
+EXPORT_PATH="${HOME}/home/bin:${HOME}/bin"
 #EXPORT_PATH="/opt/tools/bin:${EXPORT_PATH}"
 
 # export common arm cross-compiles bin .
