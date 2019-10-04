@@ -88,6 +88,7 @@ let Tlist_Exit_OnlyWindow = 1
 
 " for utf8 , big5 edit ...
 let &termencoding=&encoding
+set encoding=utf8
 set fileencodings=utf-8,big5,gbk,ucs-bom,cp950,cp936
 
 " for cflow plug in ...
