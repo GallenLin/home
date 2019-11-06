@@ -39,5 +39,8 @@ if [ -z "$(echo $PATH|grep "${EXPORT_PATH}")" ];then
 fi
 
 alias gvim="gvim -f"
-
+if [ -z "${USER}" ];then
+	echo "USER empty , set it by whoami ."
+	export USER="$(whoami)"
+fi
 
