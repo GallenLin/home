@@ -39,8 +39,14 @@ if [ -z "$(echo $PATH|grep "${EXPORT_PATH}")" ];then
 fi
 
 alias gvim="gvim -f"
+
 if [ -z "${USER}" ];then
+	# for docker .
 	echo "USER empty , set it by whoami ."
 	export USER="$(whoami)"
 fi
+
+export MYDOCKER_WORK_CONTAINER="gallen_work-191106"
+export MYDOCKER_WORK_IMAGE="ubuntu:16.04-b300-lichee-droid-ok"
+export MYDOCKER_WORK_USER="work"
 
