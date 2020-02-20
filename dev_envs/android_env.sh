@@ -200,5 +200,15 @@ myandroid_setup_env "${VENDOR}" "${SOC}"
 # setup ccache to 20GB .
 #myandroid_setup_ccache ${HOME}/ccache 20G
 
+#
+# to fix making android 8.1 problem in ubuntu 18.04
+#  
+#   flex-2.5.39: loadlocale.c:130: _nl_intern_locale_data: Assertion `cnt < (sizeof (_nl_value_type_LC_TIME) / sizeof (_nl_value_type_LC_TIME[0]))' failed.
+# 
+export LC_ALL=C
+#
+#
+
+
 return 0 
 
