@@ -5,7 +5,7 @@
 usage() {
 	echo "$0 <VENDOR> <SOC>"
 	echo "  <VENDOR> : Rockchip|NXP|Freescale|Allwinner"
-	echo "  <SOC> : rk3288|rk3368h|mx50|mx6sl|mx6dl|mx6sll|mx6ull|mx7d|b300"
+	echo "  <SOC> : rk3288|rk3368h|px30||mx50|mx6sl|mx6dl|mx6sll|mx6ull|mx7d|b300"
 	return 0
 }
 
@@ -52,7 +52,7 @@ myandroid_setup_env() {
 	echo "vendor=${vendor},soc=${soc}"
 
 	if [ "${vendor}" = "Rockchip" ];then
-		if [ "${soc}" = "rk3368h" ];then
+		if [ "${soc}" = "rk3368h" ] || [ "${soc}" = "px30" ];then
 			# for boot make options :
 			export ARCHV=aarch64
 			# for kernel options :
