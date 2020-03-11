@@ -186,13 +186,16 @@ if [ -z "${SOC}" ];then
 	return 1
 fi
 
-echo "you can make your out/ into different path by following command : "
-echo "  make OUT_DIR=xxxx"
 
-# setup droid "out" folder different from android's defualt value .
-change_droid_out_dir
+if [ "${VENDOR}" = "Freescale" ] || [ "${VENDOR}" = "NXP" ];then
+	echo "you can make your out/ into different path by following command : "
+	echo "  make OUT_DIR=xxxx"
 
-echo "current OUT_DIR=\"${OUT_DIR}\""
+	# setup droid "out" folder different from android's defualt value .
+	change_droid_out_dir
+
+	echo "current OUT_DIR=\"${OUT_DIR}\""
+fi
 
 #  
 myandroid_setup_env "${VENDOR}" "${SOC}"
