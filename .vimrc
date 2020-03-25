@@ -96,4 +96,7 @@ au BufNewFile,BufRead *.cflow setf cflow
 
 set guifont=Courier\ New\ 11
 
+set nowrap              " don't wrap by default
+set tw=0                " don't jump to newline after col 80
+
 " --- gallen add end ---
