@@ -10,7 +10,11 @@ install_bashrc_custom() {
 	
 	if [ ! -f "${HOME}/.bashrc" ] || [ "$(cat "${HOME}/.bashrc")" ];then
 		echo "${HOME}/.bashrc not found or empty !!!"
-		cp bashrc.ubuntu1204 "${HOME}/.bashrc"
+		if [ "$(lsb_release -a|grep "Linux Mint 20")" ];then
+			cp -v bashrc.linuxmint20 "${HOME}/.bashrc"
+		else 
+			cp -v bashrc.ubuntu1204 "${HOME}/.bashrc"
+		fi
 	fi
 
 	if [ -z "$(cat ~/.bashrc|grep "${addstr}")" ];then
