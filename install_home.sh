@@ -10,19 +10,21 @@ install_bashrc_custom() {
 	
 	if [ ! -f "${HOME}/.bashrc" ] || [ "$(cat "${HOME}/.bashrc")" ];then
 		echo "${HOME}/.bashrc not found or empty !!!"
-		if [ "$(lsb_release -a|grep "Linux Mint 20")" ];then
-			cp -v bashrc.linuxmint20 "${HOME}/.bashrc"
-		elif [ "$(lsb_release -i|grep "Raspbian")" ];then
-			raspbian_rev="$(lsb_release -r |awk '{print $2}')"
-			if [ -e "bashrc.raspbian-r${raspbian_rev}" ];then
-				cp -v "bashrc.raspbian-r${raspbian_rev}" "${HOME}/.bashrc"
+		lsb_id="$(lsb_release -i|awk -F: '{print $2}'|awk '{print $1}')"
+		lsb_rev="$(lsb_release -r|awk -F: '{print $2}'|awk '{print $1}')"
+		lsb_rev_major="$(echo "${lsb_rev}"|awk -F. '{print $1}')"
+		if [ "${lsb_id}" ];then
+			if [ -e "bashrc.${lsb_id}-r${lsb_rev}" ];then
+				cp -v "bashrc.${lsb_id}-r${lsb_rev}" "${HOME}/.bashrc"
+			elif [ -e "bashrc.${lsb_id}-r${lsb_rev_major}" ];then
+				cp -v "bashrc.${lsb_id}-r${lsb_rev_major}" "${HOME}/.bashrc"
 			else
-				echo "new raspbian revision ${raspbian_rev} should be added !!"
+				echo "new ${lsb_id} revision ${lsb_rev_major} should be added !!"
 				read -p "press enter to continue ." ans
-				cp -v "${HOME}/.bashrc" "bashrc.raspbian-r${raspbian_rev}"
-				chmod +x "bashrc.raspbian-r${raspbian_rev}"
+				cp -v "${HOME}/.bashrc" "bashrc.${lsb_id}-r${lsb_rev_major}"
+				chmod +x "bashrc.${lsb_id}-r${lsb_rev_major}"
 			fi
-		else 
+		else
 			cp -v bashrc.ubuntu1204 "${HOME}/.bashrc"
 		fi
 	fi
