@@ -12,6 +12,16 @@ install_bashrc_custom() {
 		echo "${HOME}/.bashrc not found or empty !!!"
 		if [ "$(lsb_release -a|grep "Linux Mint 20")" ];then
 			cp -v bashrc.linuxmint20 "${HOME}/.bashrc"
+		elif [ "$(lsb_release -i|grep "Raspbian")" ];then
+			raspbian_rev="$(lsb_release -r |awk '{print $2}')"
+			if [ -e "bashrc.raspbian-r${raspbian_rev}" ];then
+				cp -v "bashrc.raspbian-r${raspbian_rev}" "${HOME}/.bashrc"
+			else
+				echo "new raspbian revision ${raspbian_rev} should be added !!"
+				read -p "press enter to continue ." ans
+				cp -v "${HOME}/.bashrc" "bashrc.raspbian-r${raspbian_rev}"
+				chmod +x "bashrc.raspbian-r${raspbian_rev}"
+			fi
 		else 
 			cp -v bashrc.ubuntu1204 "${HOME}/.bashrc"
 		fi
