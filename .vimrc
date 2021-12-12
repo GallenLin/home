@@ -83,6 +83,9 @@ colors desert
 "set ts=2
 set tabstop=2
 set shiftwidth=2
+" no tap to space .
+set noexpandtab 
+
 nnoremap <silent> <f12> :TlistToggle<cr>
 nnoremap <silent> <f9> :wincmd p<cr>
 nnoremap <silent> <f5> :bn<cr>
