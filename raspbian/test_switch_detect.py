@@ -11,7 +11,10 @@ timeout_secs = 1
 
 def sw_handle() :
 	global stat_chg_cnt
+	global sw
 
+	if stat_chg_cnt==0:
+	    print("sw val=",sw.value)
 	cur_time=time.clock_gettime(time.CLOCK_BOOTTIME)
 	stat_chg_cnt+=1
 	last_time = cur_time
@@ -34,7 +37,7 @@ while 1 :
 		cur_time=time.clock_gettime(time.CLOCK_BOOTTIME)
 		diff_time = cur_time - last_time
 		if diff_time > timeout_secs : 
-			print("sw chg=",stat_chg_cnt)
+			print("sw chg=",stat_chg_cnt,",sw val=",sw.value)
 			stat_chg_cnt = 0
 	
 #time.sleep(1)
