@@ -80,11 +80,12 @@ endif
 
 " --- gallen add begin ---
 colors desert
-"set ts=2
-set tabstop=2
-set shiftwidth=2
 " no tap to space .
 set noexpandtab 
+"set ts=2
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
 
 nnoremap <silent> <f12> :TlistToggle<cr>
 nnoremap <silent> <f9> :wincmd p<cr>
