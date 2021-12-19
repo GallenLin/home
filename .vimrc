@@ -80,13 +80,6 @@ endif
 
 " --- gallen add begin ---
 colors desert
-" no tap to space .
-set noexpandtab 
-"set ts=2
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
-
 nnoremap <silent> <f12> :TlistToggle<cr>
 nnoremap <silent> <f9> :wincmd p<cr>
 nnoremap <silent> <f5> :bn<cr>
@@ -106,5 +99,12 @@ set guifont=Courier\ New\ 11
 
 set nowrap              " don't wrap by default
 set tw=0                " don't jump to newline after col 80
+" no tap to space .
+set noexpandtab 
+"set ts=2
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+
 
 " --- gallen add end ---
