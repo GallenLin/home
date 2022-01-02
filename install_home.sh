@@ -21,6 +21,7 @@ install_bashrc_custom() {
 			else
 				echo "new ${lsb_id} revision ${lsb_rev_major} should be added !!"
 				read -p "press enter to continue ." ans
+				cp -v bashrc.ubuntu1204 "${HOME}/.bashrc"
 				cp -v "${HOME}/.bashrc" "bashrc.${lsb_id}-r${lsb_rev_major}"
 				chmod +x "bashrc.${lsb_id}-r${lsb_rev_major}"
 			fi
