@@ -1,6 +1,8 @@
 #!/bin/bash
 
-
+if [ -z "$(which dialog)" ];then
+	sudo apt-get install dialog 
+fi
 
 work_dir="$(pwd)"
 #"
