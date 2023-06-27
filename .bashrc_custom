@@ -52,6 +52,7 @@ if [ "$(ls "/home/${USER}/.mydocker_latest_container_name")" ];then
 else
 	export MYDOCKER_WORK_CONTAINER="gallen_work-191106"
 fi
-export MYDOCKER_WORK_IMAGE="ubuntu:16.04-b300-lichee-droid-sdmk-ok"
+#export MYDOCKER_WORK_IMAGE="ubuntu:16.04-b300-lichee-droid-sdmk-ok"
+export MYDOCKER_WORK_IMAGE="chitailin/ubuntu1804:1604-b300-lichee-droid-sdmk-ok"
 export MYDOCKER_WORK_USER="work"
 
