@@ -9,12 +9,12 @@ work_dir="$(pwd)"
 
 install_bashrc_custom() {
 	addstr=". ~/.bashrc_custom"
+	lsb_id="$(lsb_release -i|awk -F: '{print $2}'|awk '{print $1}')"
+	lsb_rev="$(lsb_release -r|awk -F: '{print $2}'|awk '{print $1}')"
+	lsb_rev_major="$(echo "${lsb_rev}"|awk -F. '{print $1}')"
 	
-	if [ ! -f "${HOME}/.bashrc" ] || [ "$(cat "${HOME}/.bashrc")" ];then
+	if [ ! -f "${HOME}/.bashrc" ] || [ -z "$(cat "${HOME}/.bashrc")" ];then
 		echo "${HOME}/.bashrc not found or empty !!!"
-		lsb_id="$(lsb_release -i|awk -F: '{print $2}'|awk '{print $1}')"
-		lsb_rev="$(lsb_release -r|awk -F: '{print $2}'|awk '{print $1}')"
-		lsb_rev_major="$(echo "${lsb_rev}"|awk -F. '{print $1}')"
 		if [ "${lsb_id}" ];then
 			if [ -e "bashrc.${lsb_id}-r${lsb_rev}" ];then
 				cp -v "bashrc.${lsb_id}-r${lsb_rev}" "${HOME}/.bashrc"
@@ -24,12 +24,13 @@ install_bashrc_custom() {
 				echo "new ${lsb_id} revision ${lsb_rev_major} should be added !!"
 				read -p "press enter to continue ." ans
 				cp -v bashrc.ubuntu1204 "${HOME}/.bashrc"
-				cp -v "${HOME}/.bashrc" "bashrc.${lsb_id}-r${lsb_rev_major}"
 				chmod +x "bashrc.${lsb_id}-r${lsb_rev_major}"
 			fi
 		else
 			cp -v bashrc.ubuntu1204 "${HOME}/.bashrc"
 		fi
+	else 
+		cp -v "${HOME}/.bashrc" "bashrc.${lsb_id}-r${lsb_rev_major}"
 	fi
 
 	if [ -z "$(cat ~/.bashrc|grep "${addstr}")" ];then
