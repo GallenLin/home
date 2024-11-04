@@ -81,6 +81,9 @@ endif
 if filereadable("/usr/share/vim/vim82/vimrc_example.vim")
   source /usr/share/vim/vim82/vimrc_example.vim
 endif
+if filereadable("/usr/share/vim/vim91/vimrc_example.vim")
+  source /usr/share/vim/vim91/vimrc_example.vim
+endif
 " --- gallen add begin ---
 colors desert
 nnoremap <silent> <f12> :TlistToggle<cr>
