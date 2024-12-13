@@ -1,0 +1,18 @@
+
+set from = "chitailintv@gmail.com"
+set realname = "Chitai Lin"
+set smtp_url = "smtp://chitailintv@gmail.com@smtp.gmail.com:587/"
+set smtp_pass = "huoe dhdr lvnw zsmx"
+#set use_tls = yes
+
+#set folder = "imaps://imap.gmail.com:993"
+#set spoolfile = "+INBOX"
+#set postponed ="+[Gmail]/Drafts"
+#set header_cache =~/.mutt/cache/headers
+#set message_cachedir =~/.mutt/cache/bodies
+#set certificate_file =~/.mutt/certificates
+#set smtp_url = "smtp://user@smtp.gmail.com:587/"
+#set smtp_pass = "password"
+#set move = no
+#set imap_keepalive = 900
+
