@@ -31,6 +31,11 @@ ANDROID_SDK_ROOT="/home/${USER}/android/sdk"
 EXPORT_PATH="${ANDROID_SDK_ROOT}/tools:${ANDROID_SDK_ROOT}/platform-tools:${EXPORT_PATH}"
 echo "Please put android sdk in \"${ANDROID_SDK_ROOT}\""
 
+
+# export MTK genio-tools path . 
+EXPORT_PATH="/home/${USER}/.local/bin/:${EXPORT_PATH}"
+
+
 # export mips cross-compile bin for JZ project .
 #EXPORT_PATH="/opt/mipseltools-gcc412-glibc261/bin:${EXPORT_PATH}"
 
@@ -55,4 +60,9 @@ fi
 #export MYDOCKER_WORK_IMAGE="ubuntu:16.04-b300-lichee-droid-sdmk-ok"
 export MYDOCKER_WORK_IMAGE="chitailin/ubuntu1804:1604-b300-lichee-droid-sdmk-ok"
 export MYDOCKER_WORK_USER="work"
+
+#
+# let terminal has timestamp prompt 
+#
+#export PS1="[\$(date '+%Y-%m-%d %H:%M:%S')] \u@\h:\w\$ "
 
