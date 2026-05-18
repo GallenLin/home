@@ -1,2 +1,3 @@
 *~
 *.swp
+.ssh/id_rsa
